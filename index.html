@@ -1,0 +1,147 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Big Baseball | Welcome</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script src="js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    
+    <div class="row">
+      <div class="large-12 columns">
+        <h1>Welcome to Big Baseball</h1>
+        <h2>Home for all your baseball needs</h2>
+      </div>
+    </div>
+    <div id="products-container">
+    	
+    </div>
+    <script type="text/template" class="productsTemplate">
+	    <div class="row">
+			<div class="large-9 medium-8 columns">
+			    <h5>Here&rsquo;s your basic grid:</h5>
+			    <div class="row" id="product-list">
+				    <% _.each( products, function( product ){ %>
+		 
+			     		<div class="large-4 medium-6 small-12 columns product">
+			     		 	<div class="image-container"><img src="./img/products/<%- product.photoURL %>" /></div>
+		                    <div class="product_name" title="<%- product.name %>"><%= product.name.truncate() %></div>
+		                    <div class="product_price">$<%- product.price %></div>
+		 		 			<ul class="button-group round even-3">
+		 		 				<li><a href="#" class="small button secondary"><svg height="24px" viewBox="0 0 100 100" class="gallery-icon"><use xlink:href="#gallery" /></svg></a></li>
+		 		 				<li><a href="#" class="small button primary"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
+		 		 				<li><a href="#" class="small button success"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
+		 		 			</ul>
+		                </div>
+		 
+		            <% }); %>
+			    </div>
+			</div>
+	                
+		    <div class="large-3 medium-4 columns">
+				<div class="panel">
+					<h5>Your Cart</h5>
+					<p>Your cart is currently empty. Try adding something to it..just to see how it looks.</p>           
+		        </div>
+		    </div>
+		</div>
+	</script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/underscore-min.js"></script>
+    <script src="js/vendor/backbone-min.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+    <script type="text/javascript">
+
+        var Product = Backbone.Model.extend();
+
+        var Products = Backbone.Collection.extend({
+        	model: Product,
+        	url: 'products.json',
+        	parse: function(response){
+        		return response.products;
+        	},
+        });
+
+        var ProductsView = Backbone.View.extend({
+        	el: $('#products-container'),
+        	initialize: function(){
+        		_.bindAll(this, 'render');
+        		this.collection = new Products;
+        		var that = this;
+        		this.collection.fetch({
+        			success: function(data){
+        				that.render();
+        			},
+        			error: function(e){
+        				console.log("There was an error.",e);
+        			},
+        		})
+        	},
+        	template: _.template($('.productsTemplate').html()),
+        	render: function(){
+        		$(this.el).html(this.template({products: this.collection.toJSON()}));
+        	}
+        });
+        var app = new ProductsView;
+
+        String.prototype.truncate = function(){
+        	var l = 23,
+        		tooLong = this.length>l,
+        		s_ = tooLong ? this.substr(0,l-1) : this;
+        		s_ = tooLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+        	return tooLong ? s_ + ' &hellip;' : s_;
+        }
+    </script>
+    <svg width="32px" height="32px" viewBox="0 0 100 100" style="display: none;">
+		<g id="add_cart">
+			<path d="M46.046,84.27c1.282,2.013,2.038,4.391,2.038,6.957c0,0.271-0.025,0.542-0.038,0.818h11.358
+				c-0.018-0.276-0.044-0.548-0.044-0.818c0-2.566,0.754-4.944,2.043-6.957H46.046z"/>
+			<path d="M70.143,28.951c0-0.147,0.016-0.292,0.022-0.439l-49.354-4.637l-2.88-12.079c-0.44-1.869-1.822-3.372-3.651-3.961
+				L-7.084,0.914c-0.961-0.46-2.019-0.74-3.153-0.74c-4.037,0-7.31,3.268-7.31,7.31c0,4.028,3.273,7.307,7.31,7.307
+				c1.833,0,3.487-0.705,4.773-1.81l13.424,4.343c0,0,10.501,44.891,12.35,51.807c0.948,3.557,2.7,8.838,5.206,13.43
+				c1.791-1.982,4.169-3.415,6.874-4.002c-1.023-1.763-1.843-3.64-2.208-5.197h53.794c2.467,0,4.634-1.645,5.286-4.032l2.952-14.41
+				C79.718,52.867,70.143,42.018,70.143,28.951z"/>
+			<circle cx="35.127" cy="91.224" r="7.776"/>
+			<path d="M72.316,83.448c-4.298,0-7.772,3.485-7.772,7.778c0,4.295,3.475,7.773,7.772,7.773c4.296,0,7.775-3.479,7.775-7.773
+				C80.092,86.934,76.612,83.448,72.316,83.448z"/>
+			<path d="M96.494,7.284c-11.951,0-21.671,9.721-21.671,21.667c0,10.806,7.979,19.711,18.342,21.326
+				c1.092,0.171,2.189,0.337,3.329,0.337c11.953,0,21.676-9.719,21.676-21.664C118.17,17.005,108.447,7.284,96.494,7.284z
+				 M111.294,32.807h-10.829v10.771c0,1.411-1.189,2.12-3.549,2.12h-0.983c-0.72,0-1.29-0.086-1.784-0.216
+				c-1.153-0.298-1.764-0.919-1.764-1.904V32.807H81.696c-1.391,0-2.085-1.143-2.113-3.408c0-0.048-0.012-0.079-0.012-0.129v-0.495
+				c0-2.361,0.706-3.545,2.123-3.545h10.688V14.325c0-1.416,1.182-2.128,3.545-2.128h0.985c2.359,0,3.55,0.713,3.55,2.128v10.904
+				h10.831c1.418,0,2.124,1.184,2.124,3.545v0.495C113.421,31.63,112.712,32.807,111.294,32.807z"/>
+		</g>
+		<g id="more_info">
+			<path d="M50,99c27.613,0,49.999-22.386,49.999-50S77.613-1,50-1C22.386-1,0.001,21.386,0.001,49S22.386,99,50,99z
+				 M49.679,14.666c4.596,0,7.721,3.493,7.721,7.998c0,4.781-3.401,8.089-7.721,8.089c-4.229,0-7.631-3.309-7.631-8.089
+				C42.048,17.976,45.45,14.666,49.679,14.666z M37.544,79.475c5.424,0,5.884-0.826,5.884-7.629V50.792
+				c0-6.802-0.367-7.262-5.884-7.262v-3.676c5.608-0.369,11.583-1.84,17.927-4.505l1.563,0.827v35.76c0,6.711,0.551,7.539,5.423,7.539
+				v3.858H37.544V79.475z"/>
+		</g>
+		<g id="gallery">
+			<rect x="0" y="0" width="24" height="24"/>
+			<rect x="38" y="0" width="24" height="24"/>
+			<rect x="75" y="0" width="24" height="24"/>
+			<rect x="0" y="75" width="24" height="24"/>
+			<rect x="38" y="75" width="24" height="24"/>
+			<rect x="75" y="75" width="24" height="24"/>
+			<rect x="0" y="38" width="24" height="24"/>
+			<rect x="38" y="38" width="24" height="24"/>
+			<rect x="75" y="38" width="24" height="24"/>
+		</g>
+	</svg>
+	<div id="information-modal" class="reveal-modal" data-reveal aria-labeledby="info-modal-title" aria-hidden="true" role="dialog">
+		<h2 id="info-modal-title"></h2>
+		<p id="info-modal-desc"></p>
+		<span id="info-modal-price">$9.99</span>
+		<span id="info-modal-add-to-cart button success">Add to Cart</span>
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+  </body>
+</html>
