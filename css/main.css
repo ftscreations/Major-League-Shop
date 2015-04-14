@@ -20,17 +20,26 @@
 .button.primary:hover {
 	background-color: #B12200;
 }
+.button.primary:focus {
+    background-color: #641300;
+}
 .button.secondary {
 	background-color: #A97928;
 }
 .button.secondary:hover {
 	background-color: #DCBC1E;
 }
+.button.secondary:focus {
+    background-color: #A97928;
+}
 .button.success {
 	background-color: #47710B;
 }
 .button.success:hover {
 	background-color: #78BD13;
+}
+.button.success:focus {
+    background-color: #47710B;
 }
 .gallery-icon {
 	margin-left: 9px;
@@ -48,7 +57,32 @@
 .panel {
 	background: #47710B;
 	border-color: #375709;
-}
-.panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6, .panel p, .panel li, .panel dl {
 	color: #FFF;
+}
+.panel h5 {
+	color: #FFF;
+}
+.cart-item-container {
+	font-size: 70%;
+	clear: both;
+	margin-bottom: 10px;
+	display: inline-block;
+	line-height: 15px;
+}
+.cart-item-container span {
+	vertical-align: top;
+}
+.cart-item-container img {
+	margin-right: 5px;
+}
+.item-remove {
+	cursor: pointer;
+}
+.item-content {
+	display: inline-block;
+	float: right;
+	margin-top: -2px;
+}
+#cart-totals{
+	text-align: right;
 }

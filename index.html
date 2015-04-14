@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Big Baseball | Welcome</title>
+    <title>Major League Merchandise</title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/main.css" />
     <script src="js/vendor/modernizr.js"></script>
@@ -12,44 +12,70 @@
     
     <div class="row">
       <div class="large-12 columns">
-        <h1>Welcome to Big Baseball</h1>
+        <h1>Major League Merchandise</h1>
         <h2>Home for all your baseball needs</h2>
       </div>
     </div>
-    <div id="products-container">
     	
-    </div>
-    <script type="text/template" class="productsTemplate">
 	    <div class="row">
 			<div class="large-9 medium-8 columns">
-			    <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3" id="product-list">
-				    <% _.each( products, function( product ){ %>
-		 
-			     		<li class="product">
-			     		 	<div class="image-container"><img src="./img/products/<%- product.photoURL %>" /></div>
-		                    <div class="product_name" title="<%- product.name %>"><%= product.name.truncate() %></div>
-		                    <div class="product_price">$<%- product.price %></div>
-		 		 			<ul class="button-group round even-3">
-		 		 				<li><a href="#" class="small button secondary"><svg height="24px" viewBox="0 0 100 100" class="gallery-icon"><use xlink:href="#gallery" /></svg></a></li>
-		 		 				<li><a href="#" class="small button primary"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
-		 		 				<li><a href="#" class="small button success"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
-		 		 			</ul>
-		                </li>
-		 
-		            <% }); %>
-			    </ul>
-			    <div id="pagination"><a href="#" class="prev">Prev</a></div>
-			    <div id="pagination"><a href="#" class="next">Next</a></div>
+			    <div id="products-container">
+				    <script type="text/template" class="productsTemplate">
+					    <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3" id="product-list">
+						    <% _.each( products, function( product ){ %>
+				 
+					     		<li class="product" id="<%- product.id %>">
+					     		 	<div class="image-container"><img src="./img/products/<%- product.photoURL %>" /></div>
+				                    <div class="product_name" title="<%- product.name %>"><%= product.name.truncate() %></div>
+				                    <div class="product_price">$<%- product.price %></div>
+				 		 			<ul class="button-group round even-3">
+				 		 				<li><a href="#" class="small button secondary"><svg height="24px" viewBox="0 0 100 100" class="gallery-icon"><use xlink:href="#gallery" /></svg></a></li>
+				 		 				<li><a href="#" class="small button primary"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
+				 		 				<li><a href="#" class="small button success add-to-cart"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
+				 		 			</ul>
+				                </li>
+				 
+				            <% }); %>
+					    </ul>
+					    <ul class="pagination">
+					    	<% if(page > 1) { %>
+								<li class="arrow"><a href="" class="prev">&laquo;</a></li>
+					    	<% } else { %>
+								<li class="arrow unavailable"><a href="" class="prev">&laquo;</a></li>
+					    	<% } %>
+					    	<% for(i=1;i<=pages;i++){ %>
+					    		<% if (page == i) { %>
+					    			<li class="current"><a href=""><%= i %></a></li>
+					    		<% } else { %>
+									<li><a href="" class="page"><%= i %></a></li>
+					    		<% } %>
+					    	<% }%>
+						  	<% if(page < pages) { %>
+								<li class="arrow"><a href="" class="next">&raquo;</a></li>
+					    	<% } else { %>
+								<li class="arrow unavailable"><a href="" class="next">&raquo;</a></li>
+					    	<% } %>
+						</ul>
+					</script>
+			    </div>
 			</div>
 	                
 		    <div class="large-3 medium-4 columns">
 				<div class="panel">
 					<h5>Your Cart</h5>
-					<p>Your cart is currently empty. Try adding something to it..just to see how it looks.</p>           
+					<hr />
+					<div id="items-container">	
+					</div>
+					<hr />
+					<div id="cart-totals">
+						<span id="cart-subtotal"></span>
+					</div>
 		        </div>
 		    </div>
 		</div>
-	</script>
+		<script type="text/template" class="cartItem">
+			<div class="cart-item-container" data-prodID="<%- item.attributes.id %>"><img src="./img/products/<%- item.attributes.photoURL %>" width="40" align="left" /><div class="item-content"><span class="item-name"><%= item.attributes.name.truncate() %></span><br /><span class="item-price">$<%= item.attributes.price %></span> <span class="item-quantity">Qty: <span class="qty">1</span></span><br /><span class="item-remove muted">Remove</span></div></div>
+		</script>           
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
     <script src="js/vendor/backbone-min.js"></script>
@@ -59,62 +85,39 @@
     </script>
     <script type="text/javascript">
 
-        var Product = Backbone.Model.extend();
+        var Product = Backbone.Model.extend({
+
+        });
 
         var Products = Backbone.Collection.extend({
         	initialize: function(){
-    	   		_.bindAll(this, 'parse', 'url', 'pageInfo');
+    	   		_.bindAll(this, 'url');
 	       		this.page = 1;
         	},
+        	model: Product,
         	parse: function(response){
         		this.page = response.page;
 			    this.perPage = response.per_page;
 			    this.total = response.total;
+        		this.pages = Math.ceil(this.total / this.perPage)
 			    return response.products;
         	},
         	url: function(){
-        		console.log('products.php?' + $.param({page: this.page}));
         		return 'products.php?' + $.param({page: this.page});
-        	},
-        	pageInfo: function(){
-        		var info = {
-        			total: this.total,
-        			page: this.page,
-        			perPage: this.perPage,
-        			pages: Math.ceil(this.total / this.perPage),
-        			prev: false,
-        			next: false
-        		};
-
-        		var max = Math.min(this.total, this.page * this.perPage);
- 
-			    if (this.total == this.pages * this.perPage) {
-			      max = this.total;
-			    }
-			 
-			    info.range = [(this.page - 1) * this.perPage + 1, max];
-			 
-			    if (this.page > 1) {
-			      info.prev = this.page - 1;
-			    }
-			 
-			    if (this.page < info.pages) {
-			      info.next = this.page + 1;
-			    }
-			 
-			    return info;
         	}
         });
 
         var ProductsView = Backbone.View.extend({
         	el: $('#products-container'),
         	initialize: function(){
-        		_.bindAll(this, 'render', 'previous', 'next');
+        		_.bindAll(this, 'render', 'addItem', 'previous', 'next');
         		this.getCollection();
 		    },
 	  		events: {
 	    		'click a.prev': 'previous',
-	    		'click a.next': 'next'
+	    		'click a.next': 'next',
+	    		'click a.page': 'jumpToPage',
+	    		'click a.add-to-cart': 'addItem'
 		  	},
         	template: _.template($('.productsTemplate').html()),
         	getCollection: function(){
@@ -134,7 +137,7 @@
         		})
         	},
         	render: function(){
-        		$(this.el).html(this.template({products: this.collection.toJSON()}));
+        		$(this.el).html(this.template({products: this.collection.toJSON(), page: this.collection.page, pages:this.collection.pages}));
         		return this;
         	},
         	previous: function() {
@@ -147,13 +150,78 @@
         		}
 			},
 			next: function() {
-				var pages = Math.ceil(this.collection.total/this.collection.perPage);
-				if(this.collection.page == pages){
+				if(this.collection.page == this.collection.pages){
 					return false;
 				}else{
 				    this.collection.page = parseInt(this.collection.page) + 1;
 				    this.getCollection();
 				    return false;					
+				}
+			},
+			jumpToPage: function(e){
+				e.preventDefault();
+				var newPage = $(e.target).html();
+				this.collection.page = parseInt(newPage);
+				this.getCollection();
+				return false;
+			},
+			addItem: function(e){
+				e.preventDefault();
+
+				var ID = $(e.target).parents('li.product').attr('id'),
+					that = this;
+				    cartItemTemplate = _.template($('.cartItem').html()),
+					item = _.find(this.collection.models, function(model){
+						return model.get('id') == ID;
+					}),
+					cartItems = $('.cart-item-container');
+				if(cartItems.length != 0){
+					var inCart = false;
+					cartItems.each(function(){
+						if($(this).data('prodid') == item.attributes.id){
+							inCart = this;
+							return;
+						}
+					});
+					if(inCart){
+						var qty = $(inCart).find('.qty').html();
+						qty = parseInt(qty) + 1;
+						$(inCart).find('.qty').html(qty);
+					}else{
+						$('#items-container').append(cartItemTemplate({item:item}));						
+					}
+				}else{
+					$('#items-container').append(cartItemTemplate({item:item}));
+				}
+				this.calculateTotal();
+				$('.item-remove').unbind();
+				$('.item-remove').click(function(e){
+					that.removeItem(e);
+				});
+			},
+			removeItem: function(e){
+				var prevQty = $(e.target).siblings('.item-quantity').find('.qty').html();
+				prevQty = parseInt(prevQty) - 1;
+				if(prevQty == 0){
+					$(e.target).parents('.cart-item-container').remove();
+				}else{
+					$(e.target).siblings('.item-quantity').find('.qty').html(prevQty);					
+				}
+				this.calculateTotal();
+			},
+			calculateTotal: function(){
+				var cartItems = $('.cart-item-container');
+				if(cartItems.length != 0){
+					var subtotal = 0;
+					cartItems.each(function(){
+						var qty = $(this).find('.qty').html(),
+							price = $(this).find('.item-price').html().substr(1);
+						
+						subtotal += parseFloat(qty)*parseFloat(price);
+					});
+					$('#cart-subtotal').html('Total: $' + subtotal.toFixed(2));
+				}else{
+					$('#cart-subtotal').html('');
 				}
 			}
         });
@@ -164,7 +232,7 @@
         		tooLong = this.length>l,
         		s_ = tooLong ? this.substr(0,l-1) : this;
         		s_ = tooLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
-        	return tooLong ? s_ + ' &hellip;' : s_;
+        	return tooLong ? s_ + '&hellip;' : s_;
         }
     </script>
     <svg width="32px" height="32px" viewBox="0 0 100 100" style="display: none;">

@@ -2,98 +2,116 @@
     "products": [
         {
             "name": "Sid Bream Autographed Atlanta Braves (NLCS Slide) 8x10 Photo w/ \"The Slide\"",
+            "id": "blb-001",
             "price": "40.00",
             "description": "This item was hand signed by the athlete and is accompanied by a Certificate of Authenticity from Palm Beach Autographs. A tamper-evident hologram will be affixed to the item.Signed items are guaranteed to pass any third-party authentication with 100% Money Back Guarantee. Each signature is witnessed by a member of our staff or comes out of a private signing.",
             "photoURL": "the_slide_autographed.jpg"},
         {
             "name": "Bicycle Negro League Baseball Museum Playing Cards",
+            "id": "blb-002",
             "price": "6.17",
             "description": "Bicycle has teamed up with the Negro Leagues Baseball Museum to create this special deck, with $0.15 from each deck sold going to the museum in order to preserve the rich heritage of the Negro Leagues.",
             "photoURL": "negro_league_playing_cards.jpg"},
         {
             "name": "Baseball: A Film by Ken Burns (Includes The Tenth Inning)",
+            "id": "blb-003",
             "price": "53.04",
             "description": "Here is the story of America s national pastime from master storyteller Ken Burns. It is an epic overflowing with heroes and hopefuls, scoundrels and screwballs. A saga spanning the quest for racial justice, the clash of labor and management, the immigrant experience, the transformation of popular culture, and the enduring appeal of the national pastime. And through it all, baseball remains a mirror of America.",
             "photoURL": "baseball_ken_burns.jpg"},
         {
             "name": "Nick Markakis Atlanta Braves Majestic Official Name & Number T-Shirt - Navy Blue",
+            "id": "blb-004",
             "price": "27.95",
             "description": "When you go to Atlanta Braves games, you like to be outfitted in the best of the best game day wear. Arrive in this Official Name and Number T-shirt from Majestic and you'll be ready to cheer your favorite team to victory! It features Atlanta Braves graphics on the front along with Nick Markakis graphics displayed on the back. There won't be any doubts at all concerning your team devotion!",
             "photoURL": "markakis_jersey.jpg"},
         {
             "name": "New Era New York Mets Diamond Era 59FIFTY Performance Fitted Hat - Royal Blue",
+            "id": "blb-005",
             "price": "34.95",
             "description": "Before you head out on your annual Spring Training trip, make sure you’re protected from the sun by wearing what New York wears out on the diamond. Be a part of the Mets by sporting this Diamond Era 59FIFTY fitted hat. This New Era cap features the “NY” team logo on the crown, is made with COOLERA technology to wick away moisture and SOLARERA technology to protect you from UV rays. This is the start of a new season for your New York Mets, so make sure you’re sporting this cap while you’re enjoying the games at Citi Field this spring!",
             "photoURL": "mets_hat.jpg"},
         {
             "name": "Baltimore Orioles Cal Ripken Jr. Hall of Fame Bobblehead",
+            "id": "blb-006",
             "price": "24.99",
             "description":"<li>Individually numbered limited edition of 360!</li><li>Hand crafted and hand painted with decals to authenticate the logos, names and numbers on their uniforms to replicate the ones they wore on the field.</li><li>Beautifully designed base which incorporates the National Baseball Hall of Fame logo and player name.</li><li>Stands 8\" tall.</li>",
             "photoURL": "cal_bobblehead.jpg"},
         {
             "name": "Boston Red Sox The BamVino Bottle Holder",
+            "id": "blb-007",
             "price": "39.95",
             "description":"Your passion for Red Sox baseball is only matched by your passion for wine. You might say you’re an aficionado of sports and spirits. Now you can combine your two interests with The BamVino wine bottle holder. Featuring a bronze Boston batter with an embossed team logo on his cap, this lifelike statue will make sure your devotion to the Sox is on full display while you enjoy a glass of your favorite wine. If you’re looking for a centerpiece for your next wine-tasting party, this bottle batter is sure to impress!",
             "photoURL": "bamvino_holder.jpg"},
         {
             "name": "Houston Astros Majestic Cooperstown Cool Base Jersey – Orange",
+            "id": "blb-08",
             "price": "89.95",
             "description": "Celebrate your Houston Astros fandom with this Cooperstown jersey from Majestic! This stylish jersey will have you sporting your Houston Astros pride comfortably around town. It features tackle twill graphics, mesh fabric and Cool Base fabric technology. Whether you’re running like you’re stealing a base or practicing your swing at the cages, this jersey will let everyone know that you are a devoted Houston Astros fan.",
             "photoURL": "astros_throwback_jersey.jpg"},
         {
             "name": "San Diego Padres Wooden iPhone 5 Primary Case",
+            "id": "blb-09",
             "price": "39.95",
             "description": "Celebrate your San Diego Padres fandom with this Wooden iPhone 5 Case! Laser-cut San Diego Padres graphics on this case make it the perfect accessory for every fan. Take a step back from those ordinary plastic cases and stand out in the crowd of San Diego Padres fans. This case will help protect your phone, and you’ll have easy access to all of the ports and controls!",
             "photoURL": "padres_iphone5_case.jpg"},
         {
             "name": "Homestead Grays Common Union Varsity Satin Jacket - Gray",
+            "id": "blb-10",
             "price": "119.95",
             "description": "Combat cooler temperatures this season with this Homestead Grays Common Union varsity jacket. This jacket features a Homestead-themed design in tackle twill on the front and soft satin material. Show off your die-hard Grays pride in this stylish jacket!",
             "photoURL": "grays_varsity_jacket.jpg"},
         {
             "name": "Baltimore Orioles Activo Waterproof Tote Bag - Black",
+            "id": "blb-11",
             "price": "39.95",
             "description": "<li>Adjustable, detachable shoulder strap</li><li>Attractive metal hardware</li><li>Multiple accessory pockets</li><li>Padded carry handles</li><li>Padded shoulder cushion with non-slip underside</li><li>Textured non-skid PVC base</li><li>Waterproof liner with double-cinch cord closure</li>",
             "photoURL": "orioles_tote_bag.jpg"
         },
         {
             "name": "Colorado Rockies Zubaz Pants - Black/Purple",
+            "id": "blb-12",
             "price": "39.95",
             "description": "Crazy doesn’t even begin to describe your game day style. Keep up that spirit and outdo every other Colorado Rockies fan out there with these fun Zubaz pants! They feature that classic pattern in team colors with a team logo on the right leg. There’s no way others could confuse who you came to root for!",
             "photoURL": "zubaz_pants.jpg"
         },
         {
             "name": "Cincinnati Reds Nike Women's Classic Full Zip Hoodie 1.2 – Red",
+            "id": "blb-13",
             "price": "69.95",
             "description": "Cheer on your Cincinnati Reds in this MLB Classic Full Zip Hoodie 1.2 by Nike! Whether you are battling the chill of a crisp fall afternoon or an overachieving air conditioner, this hooded sweatshirt will keep you comfy with rib-knit cuffs and waist, and full of Cincinnati Reds spirit with quality embroidered twill graphics. This dual-blend Cincinnati Reds sweatshirt offers a soft fleece lining, a drawstring hood and front pockets for your comfort.",
             "photoURL": "reds_hoodie.jpg"
         },
         {
             "name": "Seattle Mariners ProToast Elite Toaster",
+            "id": "blb-14",
             "price": "24.99",
             "description": "If the thought of sinking your teeth into a homemade Seattle Mariners sandwich doesn’t appeal to you, click that back button on your browser, buddy. The ProToast Elite Toaster exists only for the most fanatical Seattle fans — those who demand that even their food must display team spirit! This toaster offers a bevy of handy features: variable toasting control for optimal crunch, a removable crumb tray for easy cleaning, a cool-touch exterior to prevent burns and anti-slip rubber feet just in case you get a little crazy with your toasting. These are all great features, but let’s be honest — the best thing about this toaster is that it toasts a Mariners logo right onto your bread! Patty melts are pretty exciting by themselves, but patty melts sporting Mariners logos are simply awesome. It is, without a doubt, the ideal kitchen appliance for any fan who can’t get enough of the Mariners.",
             "photoURL": "mariners_toaster.jpg"
         },
         {
             "name": "Texas Rangers Classic Leather Collar – White",
+            "id": "blb-15",
             "price": "24.95",
             "description": "Celebrate your Texas Rangers fandom by dressing up your dog with this Classic collar! This comfortable collar features sublimated Texas Rangers graphics and a metal buckle closure. When he goes on a run, he’ll be showing off his speed just like the Texas Rangers players, with this festive collar on.",
             "photoURL": "rangers_collar.jpg"
         },
         {
             "name": "Arizona Diamondbacks Black 2-Pack Headrest Covers",
+            "id": "blb-16",
             "price": "19.95",
             "description": "Sit back and relax on your daily commute knowing that your Diamondbacks pride isn't far behind with this 2-pack head rest cover set. Featuring an embroidered team logo and name, this set is perfect for giving your ride a fresh boost of team spirit no matter where you go!",
             "photoURL": "diamondback_headrest_covers.jpg"
         },
         {
             "name": "Toronto Blue Jays 4-Pack Temporary Tattoos",
+            "id": "blb-17",
             "price": "2.95",
             "description": "When you were growing up your parents always advised you against getting a tattoo. The idea of permanently inking yourself terrified them, and they did their best to make it seem like a terrifying option to you, too. Now that you're older and a proud Blue Jays fan, you've gotten the urge to permanently display your love for Toronto, but Mom and Dad can rest easy because you've found temporary Blue Jays tats. This package includes four temporary Blue Jays logo tattoos that measure approximately 1.5” x 1.5”, allowing for the perfect amount of spirited flair. At the end of the day, they can easily be removed when you’re finished with them — much to your parents' relief.",
             "photoURL": "blue_jays_temp_tattoo.jpg"
         },
         {
             "name": "Miami Marlins Double-Sided 28'' x 40'' Banner",
+            "id": "blb-18",
             "price": "19.99",
             "description": "<li>Approximately 28\" x 40\"</li><li>For indoor or outdoor use</li><li>Heavy-duty polyester</li><li>Machine-washable</li><li>Made in USA</li><li>Officially licensed</li><li>Pole not included</li><li>Team graphics on both sides</li>",
             "photoURL": "marlins_flag.jpg"
