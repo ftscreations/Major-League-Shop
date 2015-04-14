@@ -30,7 +30,7 @@
 				                    <div class="product_price">$<%- product.price %></div>
 				 		 			<ul class="button-group round even-3">
 				 		 				<li><a href="#" class="small button secondary"><svg height="24px" viewBox="0 0 100 100" class="gallery-icon"><use xlink:href="#gallery" /></svg></a></li>
-				 		 				<li><a href="#" class="small button primary"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
+				 		 				<li><a href="#" class="small button primary more-info"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
 				 		 				<li><a href="#" class="small button success add-to-cart"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
 				 		 			</ul>
 				                </li>
@@ -64,9 +64,10 @@
 				<div class="panel">
 					<h5>Your Cart</h5>
 					<hr />
-					<div id="items-container">	
+					<div id="items-container">
+						<div class="empty-message">Your cart is empty</div>	
 					</div>
-					<hr />
+					<hr style="margin: 10px 0;" />
 					<div id="cart-totals">
 						<span id="cart-subtotal"></span>
 					</div>
@@ -75,7 +76,14 @@
 		</div>
 		<script type="text/template" class="cartItem">
 			<div class="cart-item-container" data-prodID="<%- item.attributes.id %>"><img src="./img/products/<%- item.attributes.photoURL %>" width="40" align="left" /><div class="item-content"><span class="item-name"><%= item.attributes.name.truncate() %></span><br /><span class="item-price">$<%= item.attributes.price %></span> <span class="item-quantity">Qty: <span class="qty">1</span></span><br /><span class="item-remove muted">Remove</span></div></div>
-		</script>           
+		</script>
+		<script type"text/template" class="modalTemplate">
+			<h2 id="info-modal-title"><%= item.attributes.name %></h2>
+			<p id="info-modal-desc"></p>
+			<span id="info-modal-price">$<%= item.attributes.price %></span>
+			<span id="info-modal-add-to-cart button success">Add to Cart</span>
+			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+		</script>        
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
     <script src="js/vendor/backbone-min.js"></script>
@@ -117,7 +125,8 @@
 	    		'click a.prev': 'previous',
 	    		'click a.next': 'next',
 	    		'click a.page': 'jumpToPage',
-	    		'click a.add-to-cart': 'addItem'
+	    		'click a.add-to-cart': 'addItem',
+	    		'click a.more-info': 'moreInfo'
 		  	},
         	template: _.template($('.productsTemplate').html()),
         	getCollection: function(){
@@ -169,7 +178,7 @@
 				e.preventDefault();
 
 				var ID = $(e.target).parents('li.product').attr('id'),
-					that = this;
+					that = this,
 				    cartItemTemplate = _.template($('.cartItem').html()),
 					item = _.find(this.collection.models, function(model){
 						return model.get('id') == ID;
@@ -191,6 +200,7 @@
 						$('#items-container').append(cartItemTemplate({item:item}));						
 					}
 				}else{
+					$('.empty-message').hide();
 					$('#items-container').append(cartItemTemplate({item:item}));
 				}
 				this.calculateTotal();
@@ -222,7 +232,17 @@
 					$('#cart-subtotal').html('Total: $' + subtotal.toFixed(2));
 				}else{
 					$('#cart-subtotal').html('');
+					$('.empty-message').show();
 				}
+			},
+			moreInfo: function(e){
+				var modalTemplate = _.template($('.modalTemplate').html()),
+					ID = $(e.target).parents('li.product').attr('id'),
+					item = _.find(this.collection.models, function(model){
+						return model.get('id') == ID;
+					})
+				$('#information-modal').append(modalTemplate({item:item}));
+				$('#information-modal').foundation('reveal', 'open');
 			}
         });
         var app = new ProductsView;
@@ -274,11 +294,6 @@
 		</g>
 	</svg>
 	<div id="information-modal" class="reveal-modal" data-reveal aria-labeledby="info-modal-title" aria-hidden="true" role="dialog">
-		<h2 id="info-modal-title"></h2>
-		<p id="info-modal-desc"></p>
-		<span id="info-modal-price">$9.99</span>
-		<span id="info-modal-add-to-cart button success">Add to Cart</span>
-		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
   </body>
 </html>
