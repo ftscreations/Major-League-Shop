@@ -98,3 +98,16 @@
 #cart-totals{
 	text-align: right;
 }
+#search-container {
+	position: relative;
+}
+#search-results {
+	background: rgba(0,0,0,0.5);
+	position: absolute;
+	top: 58px;
+	color: #FFF;
+
+}
+#search-results li {
+	list-style: none;
+}

@@ -27,6 +27,13 @@
 	}
 	$output = json_encode($output);
 
-	print_r('{"total": ['.$total.'], "per_page": ['.$perPage.'], "page": ['.$page.'], "products":'.$output.'}');
+	$titles = [];
+
+	for ($i=0; $i < ($total - 1); $i++) { 
+		array_push($titles, $products[$i]['name']);
+	}
+	$titles = json_encode($titles);
+
+	print_r('{"total": ['.$total.'], "per_page": ['.$perPage.'], "page": ['.$page.'], "products":'.$output.', "search":'.$titles.'}');
 
 ?>
