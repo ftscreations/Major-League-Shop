@@ -15,16 +15,30 @@
 	    <li class="name">
 	      <h1><a href="#">Major League Merchandise</a></h1>
 	    </li>
-	     <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
 	    <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
 	  </ul>
 
 	  <section class="top-bar-section">
-	    <!-- Right Nav Section -->
 	    <ul class="right">
 	      	<li class="menu-label">View</li>
-	        <li class="active view-option" data-view="grid"><a href="#" class="change-view"><span class="svg-container"><svg height="20px" viewBox="0 0 100 100" class="grid-icon"><use xlink:href="#grid" /></svg></span></a></li>
-	        <li class="view-option" data-view="list"><a href="#" class="change-view"><span class="svg-container"><svg height="20px" viewBox="0 0 100 100" class="list-icon"><use xlink:href="#list" /></svg></span></a></li>
+	        <li class="active view-option" data-view="grid">
+		        <a href="#" class="change-view">
+		        	<span class="svg-container">
+		        		<svg height="20px" viewBox="0 0 100 100" class="grid-icon">
+		        			<use xlink:href="#grid" />
+		        		</svg>
+		        	</span>
+		        </a>
+	        </li>
+	        <li class="view-option" data-view="list">
+	        	<a href="#" class="change-view">
+	        		<span class="svg-container">
+	        			<svg height="20px" viewBox="0 0 100 100" class="list-icon">
+	        				<use xlink:href="#list" />
+	        			</svg>
+	        		</span>
+	        	</a>
+	        </li>
 	    </ul>
 	  </section>
 	</nav>
@@ -42,7 +56,7 @@
 			                    <div class="product_price">$<%- product.price %></div>
 			 		 			<ul class="button-group round even-2">
 			 		 				<li><a href="#" class="small button more-info" data-prodid="<%- product.id %>"><svg width="15%" height="100%" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg> <span>More Info</span></a></li>
-			 		 				<li><a href="#" class="small button success add-to-cart" data-prodid="<%- product.id %>"><svg width="25%" height="100%" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /> <span>Put in Cart</span></svg></a></li>
+			 		 				<li><a href="#" class="small button success add-to-cart" data-prodid="<%- product.id %>"><svg width="25%" height="100%" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /> <span>Add to Cart</span></svg></a></li>
 			 		 			</ul>
 			                </li>
 			 
@@ -156,7 +170,7 @@
 				<h4 id="info-modal-title"><%= product.attributes.name %></small></h4>
 				<h5 id="info-modal-price">$<%= product.attributes.price %></small></h5>
 				<p id="info-modal-desc"><%= product.attributes.description %></p>
-				<span id="info-modal-add-to-cart" class="button success right add-to-cart" data-prodid="<%- product.id %>">Add to Cart</span>
+				<span id="info-modal-add-to-cart" class="button success round right add-to-cart" data-prodid="<%- product.id %>">Add to Cart</span>
 			</div>
 		</div>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -170,9 +184,7 @@
     </script>
     <script type="text/javascript">
 
-        var Product = Backbone.Model.extend({
-
-        });
+        var Product = Backbone.Model.extend();
 
         var Products = Backbone.Collection.extend({
         	initialize: function(){
@@ -194,11 +206,20 @@
         });
 
         var ProductsView = Backbone.View.extend({
+        	/**
+			 * Assign the view container and initialize populating the product view.
+			 *
+			 */
         	el: $('#products-container'),
         	initialize: function(){
         		_.bindAll(this, 'render', 'addItem', 'previous', 'next');
         		this.getCollection();
 		    },
+
+		    /**
+			 * Adds event listeners to this view.
+			 *
+			 */
 	  		events: {
 	    		'click a.prev': 'previous',
 	    		'click a.next': 'next',
@@ -206,8 +227,18 @@
 	    		'click a.add-to-cart': 'addItem',
 	    		'click a.more-info': 'moreInfo'
 		  	},
+
+		  	/**
+			 * Set the grid and list templates.
+			 *
+			 */
         	gridTemplate: _.template($('.productsTemplateGrid').html()),
         	listTemplate: _.template($('.productsTemplateList').html()),
+
+        	/**
+			 * Calls for the JSON data via AJAX and assigns them to the Products collection.
+			 *
+			 */
         	getCollection: function(){
         		if(this.collection == undefined){
         			this.collection = new Products;
@@ -224,6 +255,11 @@
         			}
         		})
         	},
+
+        	/**
+			 * This function actually builds out the product grid or list.
+			 *
+			 */
         	render: function(){
         		var datalist = '';
         		this.collection.each(function(index){
@@ -238,6 +274,11 @@
         		}
         		return this;
         	},
+
+        	/**
+			 * Go to the previous page in the pagination.
+			 *
+			 */
         	previous: function() {
         		if(this.collection.page == 1){
 				    return false;       			
@@ -247,6 +288,11 @@
 				    return false;       			        			
         		}
 			},
+
+			/**
+			 * Go to the next page in the pagination.
+			 *
+			 */
 			next: function() {
 				if(this.collection.page == this.collection.pages){
 					return false;
@@ -256,6 +302,11 @@
 				    return false;					
 				}
 			},
+
+			/**
+			 * Jumps to any page in the pagination.
+			 *
+			 */
 			jumpToPage: function(e){
 				e.preventDefault();
 				var newPage = $(e.target).html();
@@ -263,6 +314,11 @@
 				this.getCollection();
 				return false;
 			},
+
+			/**
+			 * Add item to the cart.
+			 *
+			 */
 			addItem: function(e){
 				e.preventDefault();
 
@@ -303,6 +359,11 @@
 					that.removeItem(e);
 				});
 			},
+
+			/**
+			 * Remove item from cart.
+			 *
+			 */
 			removeItem: function(e){
 				var prevQty = $(e.target).siblings('.item-quantity').find('.qty').html();
 				prevQty = parseInt(prevQty) - 1;
@@ -313,6 +374,11 @@
 				}
 				this.calculateTotal();
 			},
+
+			/**
+			 * Calculates the cart total.
+			 *
+			 */
 			calculateTotal: function(){
 				var cartItems = $('.cart-item-container');
 				if(cartItems.length != 0){
@@ -329,6 +395,11 @@
 					$('.empty-message').show();
 				}
 			},
+
+			/**
+			 * Listens for the moreInfo button to be clicked.
+			 *
+			 */
 			moreInfo: function(e){
 				var prodName = $(e.target).parents('.product').find('.product_name').attr('title');
 				popModal(prodName);
@@ -336,6 +407,10 @@
         });
         var app = new ProductsView;
 
+        /**
+		 * Changes the users view when grid or list is clicked.
+		 *
+		 */
         $('.change-view').click(function(e){
         	layout = $(e.target).parents('.view-option').data('view');
         	pageLayout = layout;
@@ -348,6 +423,10 @@
 			$(e.target).parents('.view-option').addClass('active');
         })
 
+        /**
+		 * Limits the number of characters outputted in a string. Also truncates a partial final word.
+		 *
+		 */
         String.prototype.truncate = function(l){
         	if(l == undefined){
         		var l = 23;        		
@@ -358,6 +437,10 @@
         	return tooLong ? s_ + '&hellip;' : s_;
         }
 
+        /**
+		 * Populates the modal, displays it and adds listener
+		 *
+		 */
         function popModal(prodName){
 			var modalTemplate = _.template($('.modalTemplate').html()),
 				item = _.find(app.collection.models, function(model){
@@ -365,13 +448,18 @@
 				});
 			console.log(prodName);
     		$('#information-modal').html(modalTemplate({product:item}));
-			$('#information-modal').foundation('reveal', 'open'); 
+			$('#information-modal').foundation('reveal', 'open');
+			$("#info-modal-add-to-cart").unbind();
 			$("#info-modal-add-to-cart").click(function(e){
 				app.addItem(e);
 				$('#information-modal').foundation('reveal', 'close'); 
 			});
         }
 
+        /**
+		 * Dynamically returns search results each time the search form is changed
+		 *
+		 */
         $("#product-search").on('input', function(){
         	var products = app.collection.search;
         	var phrase = $(this).val().toLowerCase();
