@@ -2314,7 +2314,8 @@ meta.foundation-mq-topbar {
   .button-group.even-2 li {
     margin: 0 -2px;
     display: inline-block;
-    width: 50%; }
+    width: 50%;
+    vertical-align: top; }
     .button-group.even-2 li > button, .button-group.even-2 li .button {
       border-left: 1px solid;
       border-color: rgba(255, 255, 255, 0.5); }
