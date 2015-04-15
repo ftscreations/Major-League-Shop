@@ -30,8 +30,8 @@
 				                    <div class="product_price">$<%- product.price %></div>
 				 		 			<ul class="button-group round even-3">
 				 		 				<li><a href="#" class="small button secondary"><svg height="24px" viewBox="0 0 100 100" class="gallery-icon"><use xlink:href="#gallery" /></svg></a></li>
-				 		 				<li><a href="#" class="small button primary more-info"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
-				 		 				<li><a href="#" class="small button success add-to-cart"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
+				 		 				<li><a href="#" class="small button primary more-info" data-prodid="<%- product.id %>"><svg height="24px" viewBox="0 0 100 100" class="info-icon"><use xlink:href="#more_info" /></svg></a></li>
+				 		 				<li><a href="#" class="small button success add-to-cart" data-prodid="<%- product.id %>"><svg width="34px" height="24px" viewBox="0 0 100 100" class="cart-icon"><use xlink:href="#add_cart" /></svg></a></li>
 				 		 			</ul>
 				                </li>
 				 
@@ -94,10 +94,17 @@
 			<div class="cart-item-container" data-prodID="<%- item.attributes.id %>"><img src="./img/products/<%- item.attributes.photoURL %>" width="40" align="left" /><div class="item-content"><span class="item-name"><%= item.attributes.name.truncate() %></span><br /><span class="item-price">$<%= item.attributes.price %></span> <span class="item-quantity">Qty: <span class="qty">1</span></span><br /><span class="item-remove muted">Remove</span></div></div>
 		</script>
 		<script type"text/template" class="modalTemplate">
-			<h2 id="info-modal-title"><%= item.attributes.name %></h2>
-			<p id="info-modal-desc"></p>
-			<span id="info-modal-price">$<%= item.attributes.price %></span>
-			<span id="info-modal-add-to-cart button success">Add to Cart</span>
+			<div class="row">
+				<div class="small-6 columns">
+					<img src="./img/products/<%- product.attributes.photoURL %>" align="left" />
+				</div>
+				<div class="small-6 columns">
+					<h4 id="info-modal-title"><%= product.attributes.name %></small></h4>
+					<h5 id="info-modal-price">$<%= product.attributes.price %></small></h5>
+					<p id="info-modal-desc"><%= product.attributes.description %></p>
+					<span id="info-modal-add-to-cart" class="button success right add-to-cart" data-prodid="<%- product.id %>">Add to Cart</span>
+				</div>
+			</div>
 			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 		</script>        
     <script src="js/vendor/jquery.js"></script>
@@ -200,13 +207,18 @@
 			addItem: function(e){
 				e.preventDefault();
 
-				var ID = $(e.target).parents('li.product').attr('id'),
-					that = this,
+				if($(e.target).hasClass('add-to-cart')){
+					var ID = $(e.target).data('prodid');					
+				}else{
+					var ID = $(e.target).parents('.add-to-cart').data('prodid');
+				}
+				var that = this,
 				    cartItemTemplate = _.template($('.cartItem').html()),
 					item = _.find(this.collection.models, function(model){
 						return model.get('id') == ID;
 					}),
 					cartItems = $('.cart-item-container');
+					console.log($(e.target));
 				if(cartItems.length != 0){
 					var inCart = false;
 					cartItems.each(function(){
@@ -259,30 +271,45 @@
 				}
 			},
 			moreInfo: function(e){
-				var modalTemplate = _.template($('.modalTemplate').html()),
-					ID = $(e.target).parents('li.product').attr('id'),
-					item = _.find(this.collection.models, function(model){
-						return model.get('id') == ID;
-					});
-				$('#information-modal').append(modalTemplate({item:item}));
-				$('#information-modal').foundation('reveal', 'open');
+				var prodName = $(e.target).parents('.product').children('.product_name').attr('title');
+				popModal(prodName);
 			}
         });
         var app = new ProductsView;
 
-        String.prototype.truncate = function(){
-        	var l = 23,
-        		tooLong = this.length>l,
+        String.prototype.truncate = function(l){
+        	if(l == undefined){
+        		var l = 23;        		
+        	}
+        	var tooLong = this.length>l,
         		s_ = tooLong ? this.substr(0,l-1) : this;
         		s_ = tooLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
         	return tooLong ? s_ + '&hellip;' : s_;
+        }
+
+        function popModal(prodName){
+			var modalTemplate = _.template($('.modalTemplate').html()),
+				item = _.find(app.collection.models, function(model){
+					return model.get('name') == prodName;
+				});
+    		$('#information-modal').html(modalTemplate({product:item}));
+			$('#information-modal').foundation('reveal', 'open'); 
+			$("#info-modal-add-to-cart").click(function(e){
+				app.addItem(e);
+				$('#information-modal').foundation('reveal', 'close'); 
+			});
         }
 
         $("#product-search").on('input', function(){
         	var products = app.collection.search;
         	var phrase = $(this).val().toLowerCase();
         	$("#search-results").html('');
-        	if(phrase == '') return;
+        	if(phrase == ''){
+        		$("#search-results").hide();
+        		return;
+        	}else{
+        		$("#search-results").show();
+        	}
         	products.forEach(function(index){
         		if(index.toLowerCase().indexOf(phrase) > -1){
         			$("#search-results").append('<li class="search-result">'+index+'</li>');
@@ -291,11 +318,9 @@
         	$(".search-result").unbind();
         	$(".search-result").click(function(e){
         		var productName = $(e.target).html();
-        		item = _.find(app.collection.models, function(model){
-						return model.get('name') == productName;
-					});
-        		$('#information-modal').append(_.template($('.modalTemplate').html())({item:item}));
-				$('#information-modal').foundation('reveal', 'open');
+        		popModal(productName);
+        		$("#product-search").val('');
+        		$("#search-results").html('').hide();
         	});
         });
     </script>
